@@ -71,10 +71,11 @@ public class LinalList {
         if (id > 0 && id <= this.getSize()){
             if (id == this.getSize()){
                 this.deleteLast();
+            } else if (id == 1){
+                head = head.previous;
             } else {
                 Unit pointer = head;
                 int counter = 1;
-                //TODO
                 while(counter != id - 1){
                     counter++;
                     pointer = head.previous;
@@ -214,9 +215,10 @@ public class LinalList {
 
     public void bubbleSort(){
         boolean isSorted = false;
+        int size = this.getSize();
         while (!isSorted){
             isSorted = true;
-            for (int i = 1; i < this.getSize(); i++){
+            for (int i = 1; i < size - 1; i++){
                 if (this.getInfo(i) > this.getInfo(i+1)){
                     this.changePositions(i,i+1);
                     isSorted = false;
