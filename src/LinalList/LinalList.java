@@ -1,14 +1,14 @@
 package LinalList;
 
 public class LinalList {
-    private Unit head;
+    private Node head;
 
     public LinalList(){
-        this.head = new Unit();
+        this.head = new Node();
     }
 
     public LinalList(int info){
-        this.head = new Unit(info);
+        this.head = new Node(info);
     }
 
     public LinalList(int[] massive){
@@ -18,26 +18,26 @@ public class LinalList {
     }
 
     public void add(int info){
-        Unit unit = new Unit(info);
-        unit.previous = head;
-        head = unit;
+        Node node = new Node(info);
+        node.next = head;
+        head = node;
     }
 
     public void addStart(int info){
-        Unit unit = head;
-        head = new Unit(info);
-        head.previous = unit;
+        Node node = head;
+        head = new Node(info);
+        head.next = node;
     }
 
     public void addAt(int info, int id){
         if (getSize(head) >= id) {
-            Unit newUnit = new Unit(info);
-            Unit unit = head;
+            Node newNode = new Node(info);
+            Node node = head;
             for (int i = 2; i <= id; i++){
-                unit = head.previous;
+                node = head.next;
             }
-            newUnit.previous = unit.previous;
-            unit.previous = newUnit;
+            newNode.next = node.next;
+            node.next = newNode;
         } else {
             System.out.println("НЕВЕРНЫЙ ID");
         }
@@ -48,23 +48,23 @@ public class LinalList {
     }
 
     public void print(){
-        Unit unit = head;
+        Node node = head;
 
         if (this.isEmpty()) {
             System.out.println("Пустой список.");
         } else {
-            System.out.print(unit.info);
-            unit = unit.previous;
-            while (unit != null){
-                System.out.print(" -> " + unit.info);
-                unit = unit.previous;
+            System.out.print(node.info);
+            node = node.next;
+            while (node != null){
+                System.out.print(" -> " + node.info);
+                node = node.next;
             }
             System.out.println();
         }
     }
 
     public void deleteLast(){
-        head = head.previous;
+        head = head.next;
     }
 
     public void deleteAt(int id){
@@ -72,15 +72,15 @@ public class LinalList {
             if (id == this.getSize()){
                 this.deleteLast();
             } else if (id == 1){
-                head = head.previous;
+                head = head.next;
             } else {
-                Unit pointer = head;
+                Node pointer = head;
                 int counter = 1;
                 while(counter != id - 1){
                     counter++;
-                    pointer = head.previous;
+                    pointer = head.next;
                 }
-                pointer.previous = pointer.previous.previous;
+                pointer.next = pointer.next.next;
             }
         } else {
             System.out.println("Неверный ID");
@@ -89,21 +89,21 @@ public class LinalList {
 
     public void deleteFrom(int id){
         if (id > 0 && id <= this.getSize()) {
-            Unit pointer = head;
+            Node pointer = head;
             int counter = 1;
 
             while (counter != id){
-                pointer = pointer.previous;
+                pointer = pointer.next;
                 counter++;
             }
-            pointer.previous = null;
+            pointer.next = null;
         } else {
             System.out.println("Неверный ID");
         }
     }
 
     public void deleteSecond(){
-        head.previous = head.previous.previous;
+        head.next = head.next.next;
     }
 
     public void reverse(){
@@ -111,13 +111,13 @@ public class LinalList {
         if (this.getSize() < 2) {
             this.print();
         } else {
-            Unit revList = head;
-            Unit pointer = head;
-            Unit holder;
+            Node revList = head;
+            Node pointer = head;
+            Node holder;
 
             while (pointer != null) {
-                holder = pointer.previous;
-                pointer.previous = revList;
+                holder = pointer.next;
+                pointer.next = revList;
                 revList = pointer;
                 pointer = holder;
             }
@@ -128,10 +128,10 @@ public class LinalList {
     public int getSize(){
         if (head != null) {
             int count = 1;
-            Unit unit = head;
-            while (unit.previous != null){
+            Node node = head;
+            while (node.next != null){
                 count++;
-                unit = unit.previous;
+                node = node.next;
             }
             return count;
         } else {
@@ -148,11 +148,11 @@ public class LinalList {
     }
 
     public void findInfo(int info){
-        Unit pointer = head;
+        Node pointer = head;
         int counter = 1;
         boolean isFirst = true;
         String res = "";
-        while (pointer.previous != null){
+        while (pointer.next != null){
             if (pointer.info == info) {
                 if (isFirst) {
                     isFirst = false;
@@ -162,7 +162,7 @@ public class LinalList {
                 }
             }
             counter++;
-            pointer = pointer.previous;
+            pointer = pointer.next;
         }
         System.out.println(res);
     }
@@ -170,10 +170,10 @@ public class LinalList {
     public int getInfo(int id){
         try{
             if (id > 0 && id <= this.getSize()){
-                Unit pointer = head;
+                Node pointer = head;
                 int counter = 1;
                 while (counter != id){
-                    pointer = pointer.previous;
+                    pointer = pointer.next;
                     counter++;
                 }
                 return pointer.info;
@@ -188,9 +188,9 @@ public class LinalList {
     public void changePositions(int id1, int id2){
         if (id1 > 0 && id2 > 0 && id2 <= this.getSize() && id1 <= id2){
             int counter = 1;
-            Unit pointer = head;
-            Unit firstElem = null;
-            Unit secondElem = null;
+            Node pointer = head;
+            Node firstElem = null;
+            Node secondElem = null;
 
             while (pointer != null){
                 if (counter == id1){
@@ -199,7 +199,7 @@ public class LinalList {
                 if (counter == id2) {
                     secondElem = pointer;
                 }
-                pointer = pointer.previous;
+                pointer = pointer.next;
                 counter++;
             }
 
@@ -230,27 +230,27 @@ public class LinalList {
     }
 
     //PRIVATE METHODS
-    private int getSize(Unit head){
+    private int getSize(Node head){
         int count = 0;
-        Unit unit = head;
-        while (unit.previous != null){
+        Node node = head;
+        while (node.next != null){
             count++;
-            unit = unit.previous;
+            node = node.next;
         }
         return ++count;
     }
 
-    private void print(Unit head){
-        Unit unit = head;
+    private void print(Node head){
+        Node node = head;
 
         if (this.isEmpty()) {
             System.out.println("Пустой список.");
         } else {
-            System.out.print(unit.info);
-            unit = unit.previous;
-            while (unit != null){
-                System.out.print(" -> " + unit.info);
-                unit = unit.previous;
+            System.out.print(node.info);
+            node = node.next;
+            while (node != null){
+                System.out.print(" -> " + node.info);
+                node = node.next;
             }
             System.out.println();
         }
