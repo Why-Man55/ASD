@@ -2,15 +2,15 @@ package LinalList;
 
 public class Test1 {
     public static void main(String[] arg){
-        LinalList list1 = new LinalList();
+        LinalList list1 = new LinalList(1);
         LinalList list2 = new LinalList(10);
         LinalList list3 = new LinalList(new int[]{20, 200});
 
-        list1.add(1);
-        list1.add(2);
-        list1.add(3);
-        list1.add(2);
-        list1.add(5);
+        list1.addStart(1);
+        list1.addStart(2);
+        list1.addStart(3);
+        list1.addStart(2);
+        list1.addStart(5);
         list1.addAt(10, 3);
         list1.print();
         list1.findInfo(2);
@@ -18,7 +18,7 @@ public class Test1 {
         list1.bubbleSort();
         System.out.println();
 
-        list2.deleteLast();
+        list2.deleteFirst();
         list2.print();
         System.out.println();
 

@@ -1,12 +1,10 @@
 package LinalList;
 
 public class Node {
-    int info = 0;
+    int info;
     Node next = null;
 
     public Node(int info){
         this.info = info;
     }
-
-    public Node(){}
 }

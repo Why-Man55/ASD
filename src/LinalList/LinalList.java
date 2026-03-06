@@ -2,31 +2,25 @@ package LinalList;
 
 public class LinalList {
     private Node head;
-
-    public LinalList(){
-        this.head = new Node();
-    }
+    private int size;
 
     public LinalList(int info){
         this.head = new Node(info);
+        size = 1;
     }
 
     public LinalList(int[] massive){
         for (int info : massive){
-            add(info);
+            addStart(info);
         }
-    }
-
-    public void add(int info){
-        Node node = new Node(info);
-        node.next = head;
-        head = node;
+        size = massive.length;
     }
 
     public void addStart(int info){
         Node node = head;
         head = new Node(info);
         head.next = node;
+        size++;
     }
 
     public void addAt(int info, int id){
@@ -38,14 +32,15 @@ public class LinalList {
             }
             newNode.next = node.next;
             node.next = newNode;
+            size++;
         } else {
             System.out.println("НЕВЕРНЫЙ ID");
         }
     }
 
-    public void addRange(int[] info){
-        //TODO
-    }
+//    public void addRange(int[] info){
+//        //TODO
+//    }
 
     public void print(){
         Node node = head;
@@ -63,14 +58,40 @@ public class LinalList {
         }
     }
 
-    public void deleteLast(){
-        head = head.next;
+    public boolean deleteFirst(){
+        if (head != null){
+            head = head.next;
+            size--;
+            return true;
+        } else {
+            System.out.println("Пустой список.");
+            return false;
+        }
     }
 
-    public void deleteAt(int id){
-        if (id > 0 && id <= this.getSize()){
-            if (id == this.getSize()){
-                this.deleteLast();
+    public boolean deleteLast(){
+        if (head != null){
+            if (head.next == null){
+                this.deleteSecond();
+            } else {
+                Node pointer = head;
+                while (pointer.next.next != null){
+                    pointer = pointer.next;
+                }
+                pointer.next = null;
+            }
+            size--;
+            return true;
+        } else {
+            System.out.println("Пустой список.");
+            return false;
+        }
+    }
+
+    public boolean deleteAt(int id){
+        if (id > 0 && id <= size){
+            if (id == size){
+                this.deleteFirst();
             } else if (id == 1){
                 head = head.next;
             } else {
@@ -82,13 +103,16 @@ public class LinalList {
                 }
                 pointer.next = pointer.next.next;
             }
+            size--;
+            return true;
         } else {
             System.out.println("Неверный ID");
+            return false;
         }
     }
 
-    public void deleteFrom(int id){
-        if (id > 0 && id <= this.getSize()) {
+    public boolean deleteFrom(int id){
+        if (id > 0 && id <= size) {
             Node pointer = head;
             int counter = 1;
 
@@ -97,18 +121,32 @@ public class LinalList {
                 counter++;
             }
             pointer.next = null;
+            size--;
+            return true;
         } else {
             System.out.println("Неверный ID");
+            return false;
         }
     }
 
-    public void deleteSecond(){
-        head.next = head.next.next;
+    public boolean deleteSecond(){
+        if (head != null){
+            if (head.next != null){
+                head.next = head.next.next;
+                size--;
+                return true;
+            } else {
+                System.out.println("Второго элемента нет.");
+            }
+        } else {
+            System.out.println("Пустой список.");
+        }
+        return false;
     }
 
     public void reverse(){
         //TODO
-        if (this.getSize() < 2) {
+        if (size < 2) {
             this.print();
         } else {
             Node revList = head;
@@ -126,17 +164,7 @@ public class LinalList {
     }
 
     public int getSize(){
-        if (head != null) {
-            int count = 1;
-            Node node = head;
-            while (node.next != null){
-                count++;
-                node = node.next;
-            }
-            return count;
-        } else {
-            return 0;
-        }
+        return size;
     }
 
     public boolean isEmpty(){
@@ -169,7 +197,7 @@ public class LinalList {
 
     public int getInfo(int id){
         try{
-            if (id > 0 && id <= this.getSize()){
+            if (id > 0 && id <= size){
                 Node pointer = head;
                 int counter = 1;
                 while (counter != id){
@@ -186,7 +214,7 @@ public class LinalList {
     }
 
     public void changePositions(int id1, int id2){
-        if (id1 > 0 && id2 > 0 && id2 <= this.getSize() && id1 <= id2){
+        if (id1 > 0 && id2 > 0 && id2 <= size && id1 <= id2){
             int counter = 1;
             Node pointer = head;
             Node firstElem = null;
@@ -215,10 +243,10 @@ public class LinalList {
 
     public void bubbleSort(){
         boolean isSorted = false;
-        int size = this.getSize();
+        int capacity = size;
         while (!isSorted){
             isSorted = true;
-            for (int i = 1; i < size - 1; i++){
+            for (int i = 1; i < capacity - 1; i++){
                 if (this.getInfo(i) > this.getInfo(i+1)){
                     this.changePositions(i,i+1);
                     isSorted = false;
