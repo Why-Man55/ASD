@@ -10,7 +10,7 @@ public class TestsCreator {
             for (int i = 1; i <= iterationsCount; i++){
                 int cnt = rd.nextInt(100, 10001);
                 for (int j = 1; j <= cnt; j++){
-                    file.write("" + rd.nextInt(1, 100));
+                    file.write("" + rd.nextInt(1, 10001));
                     if (j != cnt){
                         file.write(" ");
                     }
