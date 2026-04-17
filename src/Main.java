@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,11 +10,37 @@ import static java.lang.Math.pow;
 
 public class Main {
     public static void main(String[] args) {
-        int[] numbers = {84, 6, 40, 33, 60, 52, 24, 32, 13, 5, 90, 85, 59, 86, 46, 22, 42, 45, 37, 44};
-        shellSort(numbers);
 
-        for (int i : numbers) {
-            System.out.print(i + " ");
+        try(BufferedReader read = new BufferedReader(new FileReader("src/tests.txt"))){
+            String line;
+            while ((line = read.readLine()) != null) {
+                long start = System.currentTimeMillis();
+
+                String[] strLine = line.split(" ");
+                int[] intLine = new int[strLine.length];
+                for (int i = 0; i < strLine.length; i++){
+                    intLine[i] = Integer.parseInt(strLine[i]);
+                }
+                shellSort(intLine);
+
+                for (int i : intLine) {
+                    System.out.print(i + " ");
+                }
+
+                long finish = System.currentTimeMillis();
+                long timeElapsed = finish - start;
+
+                try(FileWriter file = new FileWriter("src/res.txt", true)){
+                    file.write(timeElapsed + " " + intLine.length);
+                    file.append('\n');
+                    file.flush();
+                }
+
+                System.out.println();
+                System.out.println();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
