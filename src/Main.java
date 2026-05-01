@@ -2,14 +2,20 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        int[][] graph = {
+                {0, 10, 0, 30, 50},
+                {10, 0, 5, 0, 0},
+                {0, 5, 0, 20, 10},
+                {30, 0, 20, 0, 6},
+                {50, 0, 10, 6, 0}
+        };
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        int start = 0;
+
+        int[] distances = Dijkstra.findShortestPaths(graph, start);
+
+        for (int i = 0; i < distances.length; i++) {
+            System.out.println("От " + start + " до " + i + ": " + distances[i]);
         }
     }
 }
