@@ -1,12 +1,11 @@
 import java.util.ArrayList;
-import java.util.List;
 
-public class BTreeUnit {
-    int key;
-    List<BTreeUnit> childes = new ArrayList<>();
-    List<String> info = null;
+class BTreeUnit {
+    ArrayList<Integer> keys = new ArrayList<>();
+    ArrayList<BTreeUnit> children = new ArrayList<>();
+    boolean leaf;
 
-    public BTreeUnit(){
-
+    BTreeUnit(boolean leaf) {
+        this.leaf = leaf;
     }
 }
